@@ -14,12 +14,11 @@ class MailUtils:
         self.domain = self.parse_domain()
 
     def get_msg(self, to=None, subject=None, from_=None, seen=False, limit=None, reverse=True, delay=60):
-        time.sleep(5)
+        time.sleep(3)
         with MailBox(self.domain).login(self.email, self.imap_pass) as mailbox:
             for _ in range(delay // 3):
                 try:
                     time.sleep(3)
-                    # mailbox.folder.subscribe('JUNK', True)
                     for msg in mailbox.fetch(AND(to=to, subject=subject, from_=from_,
                                                  seen=seen), limit=limit, reverse=reverse):
 
