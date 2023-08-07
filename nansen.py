@@ -74,7 +74,7 @@ class Nansen(MailUtils):
         return self.approve_email(verify_link)
 
     def get_verify_link(self):
-        result = self.get_msg(from_="hello@getlaunchlist.com", subject="Verify Email Address - Nansen 2 Early Access Waitlist Program", seen=True, limit=1)
+        result = self.get_msg(subject="Verify Email Address - Nansen 2 Early Access Waitlist Program", limit=1)
         html = result["msg"]
         soup = BeautifulSoup(html, 'lxml')
         a = soup.select_one('a[rel="noopener noreferrer"]')
