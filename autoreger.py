@@ -66,10 +66,9 @@ class AutoReger:
 
         try:
             time.sleep(self.custom_user_delay)
-            is_ok = nansen.send_approve_link()
 
-            if is_ok:
-                nansen.verify_email()
+            if nansen.send_approve_link():
+                is_ok = nansen.verify_email()
         except Exception as e:
             logger.error(f"Error {e}")
 

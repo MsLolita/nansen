@@ -15,20 +15,20 @@ class MailUtils:
 
     def get_msg(self, to=None, subject=None, from_=None, seen=False, limit=None, reverse=True, delay=60):
         time.sleep(5)
-        for _ in range(delay // 3):
-            try:
-                time.sleep(3)
-                # print(f"Getting code... {to or self.email}")
-                with MailBox(self.domain).login(self.email, self.imap_pass) as mailbox:
+        with MailBox(self.domain).login(self.email, self.imap_pass) as mailbox:
+            for _ in range(delay // 3):
+                try:
+                    time.sleep(3)
+                    # mailbox.folder.subscribe('JUNK', True)
                     for msg in mailbox.fetch(AND(to=to, subject=subject, from_=from_,
                                                  seen=seen), limit=limit, reverse=reverse):
 
-                        # logger.success(f'{self.email} | Successfully received msg: {msg.subject}')
+                        logger.success(f'{self.email} | Successfully received msg: {msg.subject}')
                         return {"success": True, "msg": msg.html}
-            except Exception as error:
-                logger.error(f'{self.email} | Unexpected error when getting code: {str(error)}')
-            else:
-                logger.error(f'{self.email} | No message received')
+                except Exception as error:
+                    logger.error(f'{self.email} | Unexpected error when getting code: {str(error)}')
+                else:
+                    logger.error(f'{self.email} | No message received')
         return {"success": False, "msg": "Didn't find msg"}
 
     def parse_domain(self):
