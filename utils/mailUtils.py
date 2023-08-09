@@ -32,6 +32,10 @@ class MailUtils:
 
     def parse_domain(self):
         domain = self.email.split("@")[-1]
+
         if "hotmail" in domain or "live" in domain:
             domain = "outlook.com"
+        elif "firstmail" in domain:
+            domain = "firstmail.ltd"
+
         return f"imap.{domain}"
